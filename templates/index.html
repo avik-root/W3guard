@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>W3Guard | Web Security Scanner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  <style>
+    html,
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #000;
+      color: #39ff14;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      min-height: 100vh;
+    }
+
+    canvas#bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .neon-text {
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14, 0 0 16px #39ff14, 0 0 32px #39ff14;
+    }
+
+    .scanner-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .scanner-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #39ff14;
+    }
+
+    .key {
+      color:rgb(107, 255, 250);
+    }
+
+    .value {
+      color:rgb(252, 156, 156);
+    }
+
+    a.no-underline {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col justify-center items-center relative z-0 overflow-y-auto">
+
+  <!-- Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Main Container -->
+  <div class="w-full max-w-2xl mx-auto px-4 py-16 relative z-10 flex flex-col justify-center items-center text-center">
+    <!-- Title -->
+    <h1 class="text-7xl font-extrabold neon-text mb-4">W3Guard<h3>V1.0.1 || <font color = red>STABLE</h3></h1>
+
+    <!-- Description -->
+    <p class="text-green-400 text-lg mb-8">
+      W3Guard is a smart web scanner built by <i>MintFire</i> that checks URLs for security risks using threat intelligence and safety analysis.
+    </p>
+
+    <!-- Form -->
+    <form id="scanForm" class="w-full space-y-4">
+      <input type="text" id="url" placeholder="Enter URL to scan..." required
+        class="w-full p-3 bg-gray-900 text-green-400 border border-green-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-green-600" />
+      <button type="submit"
+        class="w-full p-3 bg-green-700 hover:bg-green-500 text-black font-bold rounded transition duration-200">
+        Scan URL
+      </button>
+    </form>
+
+    <!-- Loading Text -->
+    <div id="loading" class="hidden text-center mt-6 animate-pulse">
+      <p class="neon-text">Scanning in progress...</p>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="mt-8 space-y-4 w-full text-left"></div>
+
+    <!-- Download Button -->
+    <button id="downloadBtn"
+      class="hidden mt-6 w-full p-3 bg-green-800 hover:bg-green-600 text-black font-bold rounded transition duration-200">
+      Download Results
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-center text-sm text-green-700 z-10 relative">
+    &copy; 2025 W3Guard | Built by <a href="https://github.com/avik-root/W3guard" target="_blank" rel="noopener noreferrer"
+      class="text-green-500 hover:text-green-300 no-underline">MintFire</a>
+  </footer>
+
+  <!-- Geometric Nodes Background Script -->
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodes = Array.from({ length: 60 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    }));
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.strokeStyle = 'rgba(57, 255, 20, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(57, 255, 20, 0.8)';
+        ctx.fill();
+
+        node.x += node.dx;
+        node.y += node.dy;
+
+        if (node.x < 0 || node.x > width) node.dx *= -1;
+        if (node.y < 0 || node.y > height) node.dy *= -1;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+
+  <!-- Scan Script -->
+  <script>
+    const scanForm = document.getElementById('scanForm');
+    const resultsDiv = document.getElementById('results');
+    const loading = document.getElementById('loading');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    scanForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('url').value;
+      if (!url) return;
+
+      resultsDiv.innerHTML = '';
+      loading.classList.remove('hidden');
+      downloadBtn.classList.add('hidden');
+
+      try {
+        const res = await fetch(`/scan?url=${encodeURIComponent(url)}`);
+        const data = await res.json();
+        loading.classList.add('hidden');
+        displayResults(data);
+        downloadBtn.onclick = () => {
+          window.location.href = `/download?url=${encodeURIComponent(url)}`;
+        };
+        downloadBtn.classList.remove('hidden');
+      } catch (err) {
+        loading.classList.add('hidden');
+        resultsDiv.innerHTML = '<p class="text-red-500">Scan failed. Please try again later.</p>';
+      }
+    });
+
+    function formatJSON(json) {
+      if (typeof json !== 'object' || json === null) return `<span class="value">${json}</span>`;
+      return Object.entries(json).map(([key, value]) => {
+        if (typeof value === 'object' && value !== null) {
+          return `<div class="ml-4"><span class="key">${key}</span>:<br>${formatJSON(value)}</div>`;
+        } else {
+          return `<div><span class="key">${key}</span>: <span class="value">${value}</span></div>`;
+        }
+      }).join('');
+    }
+
+    function createCard(title, content) {
+      return `
+        <div class="bg-gray-900 p-4 rounded shadow-md border border-green-700 scanner-card">
+          <h2 class="text-xl font-semibold mb-2 neon-text">${title}</h2>
+          <div class="whitespace-pre-wrap text-sm">${content}</div>
+        </div>
+      `;
+    }
+
+    function displayResults(data) {
+      resultsDiv.innerHTML = [
+        createCard('Domain Info', `Domain: <span class="value">${data.domain}</span><br>IP: <span class="value">${data.ip}</span><br>Domain Age: <span class="value">${data.age}</span> days`),
+        createCard('Security Headers', formatJSON(data.headers)),
+        createCard('Heuristics', formatJSON(data.heuristics)),
+        createCard('IP Database', formatJSON(data.abuseipdb)),
+        createCard('Network Scan', formatJSON(data.shodan)),
+        createCard('Security Scan', formatJSON(data.virustotal))
+      ].join('');
+    }
+  </script>
+</body>
+
+</html>
