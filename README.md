@@ -17,5 +17,3 @@ W3Guard is a browser-based web security tool built to help users detect and anal
 - **Backend**: Python (Flask)
 - **APIs Used**: [Redacted for security]
 - **PDF Export**: jsPDF for client-side generation
-
-## 📂 Project Structure
