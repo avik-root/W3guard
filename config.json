@@ -1,7 +1,7 @@
 {
-   "virustotal_api_key": "YOUR_HIBP_API_KEY",
-    "abuseipdb_api_key": "YOUR_HIBP_API_KEY",
-    "ipqualityscore_api_key": "YOUR_HIBP_API_KEY",
-    "shodan_api_key": "YOUR_HIBP_API_KEY",
-    "hibp_api_key": "YOUR_HIBP_API_KEY" 
+   "virustotal_api_key": "YOUR_virustotal_API_KEY",
+    "abuseipdb_api_key": "YOUR_abuseipdb_API_KEY",
+    "ipqualityscore_api_key": "YOUR_ipqualityscore_API_KEY",
+    "shodan_api_key": "YOUR_shodan_API_KEY",
+    "hibp_api_key": "YOUR_hibp_API_KEY" 
 }
