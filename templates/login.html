@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <style>
+    html, body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #000;
+      color: #39ff14;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    canvas#bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .neon-text {
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14, 0 0 16px #39ff14, 0 0 32px #39ff14;
+    }
+
+    .form-glow {
+      box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14, 0 0 30px #39ff14;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-glow:focus-within {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14;
+    }
+
+    /* Hover effect for the form */
+    .form-glow:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #39ff14, 0 0 40px #39ff14, 0 0 60px #39ff14;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center relative">
+
+  <!-- Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Centered Banner -->
+  <div class="text-center mb-6 z-10">
+    <h1 class="text-4xl md:text-6xl font-extrabold neon-text leading-tight">
+      W3Guard
+    </h1>
+    <p class="text-green-400 text-sm mt-2 max-w-md mx-auto">
+      W3Guard is a smart web scanner built by <i>MintFire</i> that checks URLs for security risks using threat intelligence and safety analysis.
+    </p>
+  </div>
+
+  <!-- Login Form -->
+  <form method="POST" action="/login"
+    class="form-glow bg-gray-900 p-8 rounded shadow-md space-y-4 z-10 relative w-full max-w-sm border border-green-500">
+    <h2 class="text-3xl font-bold mb-4 text-center neon-text">Login</h2>
+    <input type="text" name="username" placeholder="Username" required class="w-full p-2 rounded bg-black border border-green-400">
+    <input type="password" name="password" placeholder="Password" required class="w-full p-2 rounded bg-black border border-green-400">
+    <button type="submit" class="w-full bg-green-500 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Login</button>
+    <a href="/signup" class="block text-center text-green-300 mt-2">Don't have an account? Sign up</a>
+    <a href="/" class="block text-center text-green-500 mt-2">← Back to Home</a>
+  </form>
+
+  <!-- Canvas Animation Script -->
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodes = Array.from({ length: 60 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    }));
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.strokeStyle = 'rgba(57, 255, 20, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(57, 255, 20, 0.8)';
+        ctx.fill();
+
+        node.x += node.dx;
+        node.y += node.dy;
+
+        if (node.x < 0 || node.x > width) node.dx *= -1;
+        if (node.y < 0 || node.y > height) node.dy *= -1;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

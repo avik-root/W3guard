@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>W3Guard Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #39ff14;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    canvas#bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .neon-text {
+      text-shadow: 0 0 8px #39ff14, 0 0 16px #39ff14, 0 0 32px #39ff14;
+    }
+
+    .logout-button {
+      color: #ff4d4d;
+      text-shadow: 0 0 8px #ff4d4d, 0 0 16px #ff4d4d;
+      transition: transform 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .logout-button:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 12px #ff4d4d, 0 0 24px #ff4d4d;
+      color: #ff0000;
+    }
+
+    table thead th {
+      color: #00ffcc;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+
+    .z-top {
+      z-index: 10;
+      position: relative;
+    }
+  </style>
+</head>
+<body class="p-6">
+  <!-- Canvas background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Main content -->
+  <div class="z-top relative">
+    <h1 class="text-4xl font-bold neon-text mb-6">W3Guard Admin Panel</h1>
+    <a href="/logout" class="logout-button text-lg font-semibold">Logout</a>
+
+    <table class="w-full mt-6 border border-green-600 bg-black bg-opacity-50 z-top">
+      <thead>
+        <tr class="bg-green-900 bg-opacity-30 text-black">
+          <th class="p-2">User ID</th>
+          <th class="p-2">Email</th>
+          <th class="p-2">Password</th>
+          <th class="p-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user, info in users.items() %}
+        <tr class="border-t border-green-600">
+          <form method="POST">
+            <td class="p-2 text-green-300">
+              {{ user }}
+              <input type="hidden" name="username" value="{{ user }}">
+            </td>
+            <td class="p-2">
+              <input type="text" name="email" value="{{ info.email }}" class="bg-black border border-green-400 p-1 w-full text-green-200">
+            </td>
+            <td class="p-2">
+              <input type="text" name="password" value="{{ info.password }}" class="bg-black border border-green-400 p-1 w-full text-green-200">
+            </td>
+            <td class="p-2 flex gap-2">
+              <button type="submit" name="action" value="update" class="bg-green-600 text-black px-3 py-1 rounded hover:bg-green-500">Update</button>
+              <button type="submit" name="action" value="delete" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500">Delete</button>
+            </td>
+          </form>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Canvas Animation -->
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodes = Array.from({ length: 60 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    }));
+
+    function animate() {
+      ctx.fillStyle = "rgba(0, 0, 0, 1)";
+      ctx.fillRect(0, 0, width, height);
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.strokeStyle = 'rgba(100, 255, 73, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach(node => {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(57, 255, 20, 0.8)';
+        ctx.fill();
+
+        node.x += node.dx;
+        node.y += node.dy;
+
+        if (node.x < 0 || node.x > width) node.dx *= -1;
+        if (node.y < 0 || node.y > height) node.dy *= -1;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

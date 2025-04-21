@@ -70,7 +70,14 @@
   <!-- Main Container -->
   <div class="w-full max-w-2xl mx-auto px-4 py-16 relative z-10 flex flex-col justify-center items-center text-center">
     <!-- Title -->
-    <h1 class="text-7xl font-extrabold neon-text mb-4">W3Guard<h3>V1.0.1 || <font color = red>BETA</h3></h1>
+    {% if username %}
+      <div class="absolute top-4 right-4 text-sm text-green-400">
+        Logged in as: <span class="font-bold">{{ username }}</span> |
+        <a href="/logout" class="text-red-400 hover:text-red-600">Logout</a>
+      </div>
+    {% endif %}
+    
+    <h1 class="text-7xl font-extrabold neon-text mb-4">W3Guard<h3>Ver 1.1.0 || <font color = white>STABLE</h3></h1>
 
     <!-- Description -->
     <p class="text-green-400 text-lg mb-8">
