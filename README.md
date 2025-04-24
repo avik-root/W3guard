@@ -1,6 +1,5 @@
 # W3Guard - Web Security Scanner
 
-![W3Guard Logo](https://via.placeholder.com/150?text=W3Guard)
 
 **W3Guard** is an advanced web security scanner developed to identify vulnerabilities in websites. This tool integrates with leading threat intelligence sources, such as AbuseIPDB, Shodan, and VirusTotal, to perform comprehensive security analysis of a given URL. **W3Guard** helps users detect security risks, such as malicious IPs, exposed devices, and potential malware, all through a simple and intuitive user interface.
 
