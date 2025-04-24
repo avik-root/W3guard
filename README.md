@@ -17,7 +17,7 @@
 
 - **Anusha Gupta**  
   Anusha is a skilled developer with expertise in frontend design and web security. She is dedicated to creating intuitive and user-friendly experiences while maintaining high standards of security.  
-  [LinkedIn]((https://www.linkedin.com/in/anusha-gupta-735826284/)) | [GitHub](https://github.com/anushagupta11)
+  [LinkedIn](https://www.linkedin.com/in/anusha-gupta-735826284/) | [GitHub](https://github.com/anushagupta11)
 
 Together, as **MintFire**, we aim to provide innovative solutions that ensure the safety and security of online platforms.
 
