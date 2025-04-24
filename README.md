@@ -2,57 +2,57 @@
 
 ![W3Guard Logo](https://via.placeholder.com/150?text=W3Guard)
 
-**W3Guard** is a sophisticated web security scanner designed to assess the security of websites by performing a range of checks, from domain analysis to comprehensive network scanning. Built with modern web technologies, **W3Guard** integrates with multiple security databases, such as AbuseIPDB, Shodan, and VirusTotal, to provide an in-depth analysis of any URL for vulnerabilities and potential risks.
+**W3Guard** is an advanced web security scanner developed to identify vulnerabilities in websites. This tool integrates with leading threat intelligence sources, such as AbuseIPDB, Shodan, and VirusTotal, to perform comprehensive security analysis of a given URL. **W3Guard** helps users detect security risks, such as malicious IPs, exposed devices, and potential malware, all through a simple and intuitive user interface.
 
 ---
 
 ## About Us - MintFire Team
 
-**MintFire** is a passionate team of security enthusiasts and developers who are dedicated to creating powerful tools to enhance web security and provide insights into potential vulnerabilities. 
+**MintFire** is a dedicated team of developers and security professionals focused on building innovative tools to enhance online security. We are passionate about providing cutting-edge solutions that empower businesses and individuals to protect their web environments from emerging cyber threats.
 
 ### Our Team
 
 - **Avik Samanta**  
-  A web developer with a focus on security tools, Avik brings extensive experience in backend development and web application security.  
+  A web developer with a strong focus on backend security and modern web technologies, Avik specializes in building robust and scalable security tools.  
   [LinkedIn](https://www.linkedin.com/in/avik-samanta) | [GitHub](https://github.com/avik-root)
 
 - **Anusha Gupta**  
-  Anusha is a skilled developer with expertise in security technologies and frontend design. She is dedicated to ensuring that **W3Guard** provides users with an intuitive and secure scanning experience.  
-  [LinkedIn](https://www.linkedin.com/in/anusha-gupta) | [GitHub](https://github.com/anusha-gupta)
+  Anusha is a skilled developer with expertise in frontend design and web security. She is dedicated to creating intuitive and user-friendly experiences while maintaining high standards of security.  
+  [LinkedIn]([https://www.linkedin.com/in/anusha-gupta](https://www.linkedin.com/in/anusha-gupta-735826284/)) | [GitHub](https://github.com/anushagupta11)
 
-We work together under the name **MintFire** to build innovative and secure tools that help protect online environments from emerging threats.
+Together, as **MintFire**, we aim to provide innovative solutions that ensure the safety and security of online platforms.
 
 ---
 
 ## Features
 
-- **Web Security Scan**: Performs a comprehensive security check of a URL, identifying vulnerabilities and possible risks.
-- **User Authentication & Profile**: Secure login system with a unique 6-digit Super Key to authenticate users.
-- **User Credits**: Each user is granted 10 credits per day, which are consumed during scans. Admins can modify user credits.
-- **Admin Dashboard**: Allows admins to view user activity, modify credits, and manage user details.
+- **Web Security Scan**: Detects vulnerabilities and risks on a given URL by performing a thorough security check.
+- **User Authentication & Profiles**: Secure login system with a 6-digit Super Key for user verification.
+- **Daily User Credits**: Each user is allotted 10 credits per day, which are deducted during scans. Admins can modify user credits.
+- **Admin Dashboard**: Admin users can manage user credits, monitor user activity, and adjust settings.
 - **API Integrations**:
-  - **AbuseIPDB**: Checks IP reputation for possible malicious activity.
-  - **Shodan**: Scans the domain for exposed devices and network security.
-  - **VirusTotal**: Scans URLs for malware and other security threats.
-- **Responsive Design**: The application is fully responsive, using TailwindCSS for modern and clean UI components.
-- **Dark Mode**: Built with a neon green theme, featuring a visually engaging dark mode background with dynamic animations based on time of day.
+  - **AbuseIPDB**: Retrieves IP reputation data to identify malicious activities.
+  - **Shodan**: Provides insights into devices and exposed ports associated with a URL.
+  - **VirusTotal**: Scans URLs for malware, viruses, and other potential threats.
+- **Responsive Design**: The application adapts to all screen sizes, thanks to the use of TailwindCSS.
+- **Dark Mode**: A visually striking neon green theme with a dynamic background that adjusts based on the time of day.
 
 ---
 
 ## Technologies Used
 
 - **Frontend**:
-  - HTML, CSS, and JavaScript (Vanilla)
-  - **TailwindCSS**: A utility-first CSS framework for rapid UI development.
+  - HTML, CSS, and JavaScript
+  - **TailwindCSS**: A utility-first CSS framework for responsive design and UI components.
 - **Backend**:
-  - **Flask**: A lightweight Python web framework used for the backend server.
+  - **Flask**: A lightweight Python web framework for server-side operations.
   - **Flask-Session**: Manages user sessions for login and authentication.
 - **Database**:
-  - **JSON**: Stores user information, Super Key, credits, and other essential data.
+  - **JSON**: Stores user credentials, Super Keys, credits, and other necessary data.
 - **APIs**:
-  - **AbuseIPDB**: IP reputation data to detect malicious IP addresses.
-  - **Shodan**: Network and device information.
-  - **VirusTotal**: Virus and malware scan data for URLs.
+  - **AbuseIPDB**: Provides IP reputation data to detect malicious activity.
+  - **Shodan**: Retrieves information about devices and exposed ports.
+  - **VirusTotal**: Scans URLs for malware and viruses.
 
 ---
 
@@ -60,7 +60,7 @@ We work together under the name **MintFire** to build innovative and secure tool
 
 ### Prerequisites
 
-Before installing **W3Guard**, ensure you have the following installed:
+To run **W3Guard** locally, ensure that you have the following installed:
 
 - Python 3.7+
 - pip (Python package manager)
@@ -70,100 +70,5 @@ Before installing **W3Guard**, ensure you have the following installed:
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/your-username/W3Guard.git
+git clone https://github.com/avik-root/W3Guard.git
 cd W3Guard
-Install the required dependencies:
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
-Set up environment variables: Create a .env file in the root of the project and add your API keys:
-
-env
-Copy
-Edit
-ABUSEIPDB_API_KEY=your_abuseipdb_api_key
-SHODAN_API_KEY=your_shodan_api_key
-VIRUSTOTAL_API_KEY=your_virustotal_api_key
-Run the application:
-
-bash
-Copy
-Edit
-python app.py
-The app will be accessible at http://localhost:5000.
-
-Usage
-Login:
-
-Users need to register and verify their account with an email and a 6-digit Super Key.
-
-Admin users can modify other users' Super Keys and credits via the admin dashboard.
-
-Scanning:
-
-After logging in, users can enter a URL into the input form on the homepage.
-
-The scan will deduct 1 credit from the user’s balance.
-
-The results will include domain info, IP reputation, network scan, security headers, and more.
-
-Scanned results are displayed in a user-friendly format, with the option to download the full report.
-
-Admin Panel:
-
-Admin users can view which users are online, manage credits, and view scan statistics.
-
-API Integrations
-AbuseIPDB:
-
-Provides details about IP reputation to help detect malicious activity.
-
-Shodan:
-
-Provides detailed information about open ports and devices associated with the scanned URL.
-
-VirusTotal:
-
-Scans the URL for malware, viruses, and other malicious content.
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Contributing
-We welcome contributions to enhance the functionality and improve the security of W3Guard. If you have a feature request or bug fix, please fork the repository and submit a pull request.
-
-Steps to contribute:
-Fork the repository.
-
-Create a new branch (git checkout -b feature-name).
-
-Commit your changes (git commit -am 'Add new feature').
-
-Push to the branch (git push origin feature-name).
-
-Open a pull request.
-
-Acknowledgements
-Flask: A minimal web framework that helped build the backend of this application.
-
-TailwindCSS: A utility-first CSS framework that allowed for rapid UI design and customization.
-
-Shodan: Provides network scans and helps identify exposed devices.
-
-AbuseIPDB: Helps check the reputation of IPs associated with the scanned domain.
-
-VirusTotal: Provides virus and malware scan data for enhanced security analysis.
-
-pgsql
-Copy
-Edit
-
-This version includes the MintFire Team section after the tool description and before the feature list, with links to LinkedIn and GitHub profiles for both **Avik Samanta** and **Anusha Gupta**.
-
-
-
-
-
-
